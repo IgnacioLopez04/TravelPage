@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Logica de la página de viajes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ignacio Lopez",
+  "license": "ISC",
+  "homepage": "https://github.com/IgnacioLopez04/TravelPage",
+  "dependencies": {
+    "express": "4.19.2"
+  },
+  "devDependencies": {
+    "standard": "17.1.0"
+  },
+  "eslintConfig": {
+    "extends": "standard"
+  }
+}
