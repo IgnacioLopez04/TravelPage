@@ -79,6 +79,27 @@ export class AuthController {
     res.cookie('token', '', {
       expires: new Date(0),
     })
-    return res.status(200)
+    return res.status(200).json({ message: 'Logout' })
+  }
+
+  static async perfil(req, res) {
+    let usuarios
+
+    try {
+      usuarios = await UsuarioModel.getUsers()
+    } catch (e) {
+      throw new Error({ message: 'No se encontraron usuarios' })
+    }
+
+    const usuario = usuarios.find((x) => x.id === req.usuario.id)
+    if (!usuario)
+      return res.status(400).json({ message: 'Usuario no encontrado' })
+
+    res.json({
+      id: usuario.id,
+      nombre: usuario.nombre,
+      apellido: usuario.apellido,
+      email: usuario.emial,
+    })
   }
 }

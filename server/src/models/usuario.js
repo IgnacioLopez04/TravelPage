@@ -1,15 +1,8 @@
 import mysql from 'mysql2/promise'
-
-const config = {
-  host: 'localhost',
-  user: 'root',
-  port: 3306,
-  password: 'travelpage',
-  database: 'travel_page',
-}
+import { DATABASE } from '../config/config.js'
 
 // Lo hago de esta manera ya que la conexion se tiene que realizar antes
-const connection = await mysql.createConnection(config)
+const connection = await mysql.createConnection(DATABASE)
 
 export class UsuarioModel {
   static async getEmail() {
