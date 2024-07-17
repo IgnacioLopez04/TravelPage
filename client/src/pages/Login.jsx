@@ -1,4 +1,4 @@
-export function Login() {
+export default function Login() {
   return (
     <>
       <label htmlFor="email">Email</label>
