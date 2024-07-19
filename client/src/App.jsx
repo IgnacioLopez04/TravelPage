@@ -5,6 +5,7 @@ import Registro from './pages/Registro.jsx'
 import Perfil from './pages/Perfil'
 import Viaje from './pages/Viaje'
 import { AuthProvider } from './context/authContext.jsx'
+import RutasProtegidas from './utils/RutasProtegidas.jsx'
 
 export default function App() {
   return (
@@ -14,8 +15,11 @@ export default function App() {
           <Route path="/" element={<Inicio></Inicio>}></Route>
           <Route path="/login" element={<Login></Login>}></Route>
           <Route path="/registro" element={<Registro></Registro>}></Route>
-          <Route path="/perfil" element={<Perfil></Perfil>}></Route>
           <Route path="/viaje" element={<Viaje></Viaje>}></Route>
+
+          <Route element={<RutasProtegidas></RutasProtegidas>}>
+            <Route path="/perfil" element={<Perfil></Perfil>}></Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

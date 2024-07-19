@@ -5,7 +5,12 @@ const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 })
 
 export const registroRequest = (usuario) =>
   axiosInstance.post('/registrar', usuario)
+
+export const loginRequest = (usuario) => axiosInstance.post('/login', usuario)
+
+export const verificarTokenRequest = () => axios.get('/auth/verificar')

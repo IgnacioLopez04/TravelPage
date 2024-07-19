@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 export function Menu({ activo }) {
   return (
@@ -10,19 +11,34 @@ export function Menu({ activo }) {
       <ul
         className={`bg-[#1B3358] ${
           activo ? 'flex-col' : 'hidden'
-        } py-5 md:flex md:py-0 md:pr-10`}
+        } py-5 md:flex md:p-0`}
       >
-        <li className="text-[#FFFFFF] text-2xl py-2 px-5 md:py-0 md:hover:border-b-[1px] border-[#FF8000]">
-          Inicio
+        <li>
+          <Link
+            to="/"
+            className="text-[#FFFFFF] text-2xl py-2 px-5 md:py-0 md:hover:border-b-[1px] border-[#FF8000]"
+          >
+            Inicio
+          </Link>
         </li>
         <li className="text-[#FFFFFF] text-2xl py-2 px-5 md:py-0 md:hover:border-b-[1px] border-[#FF8000]">
           Buscar
         </li>
-        <li className="text-[#FFFFFF] text-2xl py-2 px-5 md:py-0 md:hover:border-b-[1px] border-[#FF8000]">
-          Perfil
+        <li>
+          <Link
+            to="/perfil"
+            className="text-[#FFFFFF] text-2xl py-2 px-5 md:py-0 md:hover:border-b-[1px] border-[#FF8000]"
+          >
+            Perfil
+          </Link>
         </li>
-        <li className="text-[#FFFFFF] text-2xl py-2 px-5 md:py-0 md:hover:border-b-[1px] border-[#FF8000]">
-          Crear Viaje
+        <li>
+          <Link
+            to="/viaje"
+            className="text-[#FFFFFF] text-2xl py-2 px-5 md:py-0 md:hover:border-b-[1px] border-[#FF8000]"
+          >
+            Crear Viaje
+          </Link>
         </li>
       </ul>
     </div>
