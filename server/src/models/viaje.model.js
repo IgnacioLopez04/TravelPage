@@ -61,7 +61,9 @@ export class ViajeModel {
     } catch (e) {
       throw new Error({ message: 'No se pudo crear el viaje.' })
     }
-    return await this.getViaje({ id })
+
+    const viaje = await this.getViaje(id)
+    return viaje
   }
 
   static async delete({ id }) {

@@ -1,16 +1,10 @@
-import axios from 'axios'
-
-const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000/api/',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  withCredentials: true,
-})
+import { axiosInstance } from './axios'
 
 export const registroRequest = (usuario) =>
   axiosInstance.post('/registrar', usuario)
 
 export const loginRequest = (usuario) => axiosInstance.post('/login', usuario)
 
-export const verificarTokenRequest = () => axios.get('/auth/verificar')
+export const verificarTokenRequest = () => axiosInstance.get('/auth/verificar')
+
+export const logoutRequest = () => axiosInstance.post('/logout')

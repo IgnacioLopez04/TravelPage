@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { useAuth } from '../context/authContext'
+import { useAuth } from '../components/hooks'
 import { useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
@@ -23,7 +23,7 @@ export default function Registro() {
   }, [autenticado, navigate])
 
   return (
-    <div className="flex h-[calc(100vh)] justify-center items-center">
+    <div className="flex h-[calc(100vh-100px)] justify-center items-center">
       {registroErrors.map((error, i) => (
         <div key={i} className="bg-red-500 text-white">
           {error}

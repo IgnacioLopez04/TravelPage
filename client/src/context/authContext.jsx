@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { createContext, useState, useContext, useEffect } from 'react'
+import { createContext, useState, useEffect } from 'react'
 import {
   loginRequest,
   registroRequest,
@@ -8,14 +8,6 @@ import {
 import Cookies from 'js-cookie'
 
 export const AuthContext = createContext()
-
-export const useAuth = () => {
-  const context = useContext(AuthContext)
-  if (!context) {
-    throw new Error('useAuth tiene que ser utilizado con un AuthProvider')
-  }
-  return context
-}
 
 export const AuthProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(null)
@@ -45,6 +37,12 @@ export const AuthProvider = ({ children }) => {
       // VER ESTO DE LOS MENSAJES DE ERROR
       setErrors([e.response.data.error.message])
     }
+  }
+
+  const logout = async () => {
+    Cookies.remove('token')
+    setUsuario(null)
+    setAutenticado(false)
   }
 
   useEffect(() => {
@@ -89,7 +87,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ registro, usuario, autenticado, errors, login, carga }}
+      value={{ registro, usuario, autenticado, errors, login, carga, logout }}
     >
       {children}
     </AuthContext.Provider>

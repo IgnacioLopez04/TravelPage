@@ -18,7 +18,7 @@ export class ViajeController {
   static async getViaje(req, res) {
     const { id } = req.params
     try {
-      const viaje = await ViajeModel.getViaje({ id })
+      const viaje = await ViajeModel.getViaje(id)
       if (!viaje || viaje.length === 0) return res.status(404).json('Not Found')
 
       return res.json(viaje)

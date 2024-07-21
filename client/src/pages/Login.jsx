@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { useAuth } from '../context/authContext'
+import { useAuth } from '../components/hooks'
 import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -23,7 +23,7 @@ export default function Login() {
   })
 
   return (
-    <div className="flex h-[calc(100vh)] justify-center items-center">
+    <div className="flex h-[calc(100vh-100px)] justify-center items-center">
       <div className="bg-[#d6d6d6] max-w-md w-full px-10 py-8 rounded-md">
         <form onSubmit={onSubmit}>
           <h1 className="text-2xl font-bold">Iniciar Sesión</h1>

@@ -108,8 +108,8 @@ export class AuthController {
   }
 
   static async verificar(req, res) {
-    const { token } = req.cookie
-    if (!token) return res.status(401).json({ message: 'unauthorized' })
+    if (!req.cookies) return res.status(401).json({ message: 'unauthorized' })
+    const { token } = req.cookies
 
     jwt.verify(token, TOKEN_SECRET, async (err, usuario) => {
       if (err) return res.status(401).json({ message: 'Unauthorized' })
