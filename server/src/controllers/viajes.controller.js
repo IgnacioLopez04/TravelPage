@@ -9,7 +9,20 @@ export class ViajeController {
       if (!viajes || viajes.length === 0)
         return res.status(404).json('Not Found')
 
-      return res.json(viajes)
+      let viajesImagenesPromises = viajes.map(async (viaje) => {
+        const imagenes = await ViajeModel.getImagenes(viaje.id)
+
+        return {
+          id_viaje: viaje.id_viaje,
+          nombre: viaje.nombre,
+          descripcion: viaje.descripcion,
+          imagenes: imagenes,
+        }
+      })
+
+      const viajesImagenes = await Promise.all(viajesImagenesPromises)
+
+      return res.json(viajesImagenes)
     } catch (e) {
       res.status(500).json({ message: 'Internal Server Error' })
     }
@@ -21,7 +34,17 @@ export class ViajeController {
       const viaje = await ViajeModel.getViaje(id)
       if (!viaje || viaje.length === 0) return res.status(404).json('Not Found')
 
-      return res.json(viaje)
+      const imagenes = await ViajeModel.getImagenes(viaje[0].id)
+
+      const viajeImagen = {
+        id: viaje[0].id,
+        nombre: viaje[0].nombre,
+        descripcion: viaje[0].descripcion,
+        fecha_creacion: viaje[0].fecha_creacion,
+        imagenes: imagenes,
+      }
+
+      return res.json([viajeImagen])
     } catch (e) {
       res.status(500).json({ message: 'Error en retornar un viaje' })
     }
@@ -37,7 +60,17 @@ export class ViajeController {
       if (!viajes || viajes.length === 0)
         return res.status(404).json({ message: 'Not Found' })
 
-      return res.json(viajes)
+      const viajesImagenPromises = viajes.map(async (viaje) => {
+        const imagenes = await ViajeModel.getImagenes(viaje.id)
+        return {
+          ...viaje,
+          imagenes: imagenes,
+        }
+      })
+
+      const viajesImagen = await Promise.all(viajesImagenPromises)
+
+      return res.json(viajesImagen)
     } catch (e) {
       return res.status(500).json({ message: 'Internal Server Error' })
     }
@@ -57,8 +90,10 @@ export class ViajeController {
     }
 
     const result = validarViaje(req.body)
-    if (result.error)
+
+    if (result.error) {
       return res.status(400).json({ message: 'Datos invalidos' })
+    }
 
     const id = crypto.randomUUID()
     const newViaje = {
@@ -66,7 +101,8 @@ export class ViajeController {
       id: id,
       nombre: result.data.nombre,
       descripcion: result.data.descripcion,
-      es_publico: result.data.es_publico,
+      es_publico: JSON.parse(result.data.es_publico),
+      imagenes: result.data.imagenes,
     }
 
     try {

@@ -1,10 +1,21 @@
-import NavMenu from '../utils/NavMenu'
+import { useEffect } from 'react'
+import { useViaje } from '../components/hooks'
+import { Carrusel } from '../utils/Carrusel'
 import { Presentacion } from '../utils/Presentacon'
 
 export default function Inicio() {
+  const { viajes, obtenerViajes } = useViaje()
+
+  useEffect(() => {
+    obtenerViajes()
+  }, [])
+
   return (
     <>
-      <Presentacion />
+      <div className="md:flex">
+        <Presentacion />
+        {viajes.length > 0 ? <Carrusel viajes={viajes}></Carrusel> : <></>}
+      </div>
     </>
   )
 }

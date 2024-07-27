@@ -18,7 +18,12 @@ export class AuthController {
       if (email) {
         return res.status(400).json(['El email ya existe.'])
       }
-      const passwordHash = await bcrypt.hash(result.data.pass, SALT_ROUNDS)
+
+      const passwordHash = await bcrypt.hash(
+        result.data.pass,
+        parseInt(SALT_ROUNDS)
+      )
+
       const newUser = {
         id: crypto.randomUUID(),
         nombre: result.data.nombre,

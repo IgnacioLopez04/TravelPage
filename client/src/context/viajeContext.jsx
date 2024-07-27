@@ -6,6 +6,7 @@ export const ViajeContext = createContext()
 
 export function ViajeProvider({ children }) {
   const [viajes, setViajes] = useState([])
+  const [viaje, setViaje] = useState([])
 
   const crearViaje = async (viaje) => {
     try {
@@ -19,7 +20,7 @@ export function ViajeProvider({ children }) {
   const obtenerViaje = async (id) => {
     try {
       const res = await getViaje(id)
-      setViajes(res.data[0])
+      setViaje(res.data)
     } catch (e) {
       throw new Error('No se pudo obtener el viaje')
     }
@@ -46,6 +47,7 @@ export function ViajeProvider({ children }) {
   return (
     <ViajeContext.Provider
       value={{
+        viaje,
         viajes,
         crearViaje,
         obtenerViajes,

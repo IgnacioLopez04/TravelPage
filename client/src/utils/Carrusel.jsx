@@ -1,114 +1,80 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faChevronRight,
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons'
 
-export function Carrusel() {
-  const imagenes = [
-    {
-      nombreViaje: 'Salta',
-      dias: 4,
-      descripcion: 'Mucho locro y peñas',
-      url: 'https://cloudfront-us-east-1.images.arcpublishing.com/infobae/6ALKAZKZDZBDLCPDYNRYMZWTZY.jpg',
-      alt: 'foto salta',
-      calificacion: 3,
-    },
-    {
-      nombreViaje: 'Córdoba',
-      dias: 3,
-      descripcion: 'Mucho fernet, sierras y rios de aguas cristalinas',
-      url: 'https://images.musement.com/cover/0084/72/san-martin-square-cordoba-cathedral-argentina-jpg_header-8371496.jpeg',
-      alt: 'foto cordoba',
-      calificacion: 5,
-    },
-    {
-      nombreViaje: 'La Pampa',
-      dias: 2,
-      descripcion: 'No se que hay en la Pampa',
-      url: 'https://hablemosdeargentina.com/wp-content/uploads/2018/03/patagonia-la-pampa.jpg',
-      alt: 'foto la pampa',
-      calificacion: 1,
-    },
-    {
-      nombreViaje: 'Rio Negro',
-      dias: 8,
-      descripcion: 'Mucho nieve',
-      url: 'https://volemos.nyc3.cdn.digitaloceanspaces.com/blog/wp-content/uploads/2020/07/09121424/Imperdibles-de-Rio-Negro.jpg',
-      alt: 'foto rio negro',
-      calificacion: 4,
-    },
-  ]
+export function Carrusel({ viajes, descripcion }) {
+  const [index, setIndex] = useState(0)
 
-  const [imagen, setImagen] = useState([])
-
-  function CargarImagen(i) {
-    useEffect(() => {
-      setImagen([imagenes[i], i])
-    })
-  }
-  CargarImagen(0)
-
-  function Derecha(i) {
-    if (i === 3) {
-      CargarImagen(0)
-    } else {
-      CargarImagen(i + 1)
-    }
+  const Derecha = () => {
+    index >= 4 ? setIndex(0) : setIndex(index + 1)
   }
 
-  function Izquierda(i) {
-    if (i === 0) {
-      CargarImagen(3)
-    } else {
-      CargarImagen(i - 1)
-    }
+  const Izquierda = () => {
+    index <= 0 ? setIndex(4) : setIndex(index - 1)
   }
+
   return (
-    <div className="">
-      <div className="">
-        <div className="">
-          <div className="">
-            <div className="">
-              {
-                <>
+    <>
+      {viajes ? (
+        <div className="w-full px-5 my-5 ">
+          <div className="overflow-hidden relative rounded-md">
+            <div
+              className="flex items-center transition ease-in-out duration-50"
+              style={{
+                width: `${viajes.length * 100}%`,
+                transform: `translateX(-${index * 20}%)`,
+              }}
+            >
+              {viajes.map((viaje, i) => (
+                <div key={i} className="relative w-full">
                   <img
-                    src={imagen[0].url}
-                    alt={imagen[0].alt}
-                    key={imagen[1]}
-                    className=""
+                    src={viaje.imagenes[0].imagen}
+                    key={i}
+                    className="object-cover aspect-16/9"
                   ></img>
-                  <div className="">
-                    <p className="">{imagen[0].nombreViaje}</p>
-                    <p className="">Días: {imagen[0].dias}</p>
-                    <p className="">Calificación: {imagen[0].calificacion}</p>
-                    <p className="">{imagen[0].descripcion}</p>
-                  </div>
-                </>
-              }
+                  {descripcion ? (
+                    <div className="absolute z-10 bottom-0 text-xl pb-4 text-[#ffffff] bg-gradient-to-t from-black  to-transparent w-full">
+                      <p className="px-5 font-bold">{viaje.nombre}</p>
+                      <p className="px-5">{viaje.descripcion}</p>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              ))}
             </div>
-          </div>
-          <div className="">
-            <button
-              className=""
-              onClick={() => {
-                Derecha(imagen[1])
-              }}
-            >
-              <FontAwesomeIcon icon={faChevronRight}></FontAwesomeIcon>
-            </button>
-            <button
-              className=""
-              onClick={() => {
-                Izquierda(imagen[1])
-              }}
-            >
-              <FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon>
-            </button>
+            {viajes.length > 1 ? (
+              <div className="absolute top-0 h-full w-full justify-between items-center flex text-[#ff8000] px-1 md:text-5xl">
+                <button className="" onClick={Izquierda}>
+                  <FontAwesomeIcon
+                    icon={faChevronLeft}
+                    className="hover:text-[#1b3358] hover:bg-[rgba(255,128,0,0.4)] w-6 h-6 md:w-10 md:h-10 rounded-full p-3"
+                  ></FontAwesomeIcon>
+                </button>
+                <button className="" onClick={Derecha}>
+                  <FontAwesomeIcon
+                    icon={faChevronRight}
+                    className="hover:text-[#1b3358] hover:bg-[rgba(255,128,0,0.4)] w-6 h-6 md:w-10 md:h-10 rounded-full p-3"
+                  ></FontAwesomeIcon>
+                </button>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <div>hola</div>
+      )}
+    </>
   )
+}
+
+Carrusel.propTypes = {
+  viajes: PropTypes.array.isRequired,
+  descripcion: PropTypes.bool.isRequired,
 }

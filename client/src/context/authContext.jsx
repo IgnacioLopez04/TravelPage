@@ -21,7 +21,11 @@ export const AuthProvider = ({ children }) => {
       setUsuario(res.data)
       setAutenticado(true)
     } catch (e) {
-      setErrors(e.response.data)
+      if (Array.isArray(e.response.data)) {
+        return setErrors(e.response.data)
+      }
+      // VER ESTO DE LOS MENSAJES DE ERROR
+      setErrors([e.response.data.error.message])
     }
   }
 

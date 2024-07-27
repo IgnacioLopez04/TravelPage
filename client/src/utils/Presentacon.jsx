@@ -1,11 +1,14 @@
-// import { Carrusel } from './Carrusel'
+import { Link } from 'react-router-dom'
 
 export function Presentacion() {
   return (
-    <>
+    <section className="flex-col md:w-1/2 xl:w-3/4">
       <h1 className="text-center text-3xl pt-3">
         Crea tu propio
-        <button className="text-[#FF8000] text-3xl p-2">itenerario</button>
+        <button className="text-[#FF8000] text-3xl p-2 hover:bg-[rgba(255,125,0,0.2)] rounded-md">
+          <Link to="/crearViaje">itenerario</Link>
+        </button>
+        !
       </h1>
       <div className="w-3/4 h-2 border-b-2 border-dotted border-[#FF8000] mx-auto my-2"></div>
       <p className="text-center mx-4 py-3 text-xl">
@@ -22,6 +25,6 @@ export function Presentacion() {
         viajeros.
       </p>
       {/* <Carrusel></Carrusel> */}
-    </>
+    </section>
   )
 }

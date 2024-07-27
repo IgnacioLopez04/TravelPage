@@ -7,7 +7,13 @@ export const getViaje = (id) => axiosInstance.get(`/viaje/${id}`) //Buscar un vi
 export const getViajesUsuario = (id) =>
   axiosInstance.get(`/viaje/usuario/${id}`) //Buscar todos los viajes de un usuario
 
-export const postViaje = (data) => axiosInstance.post('/viaje/crear', data)
+export const postViaje = (data) => {
+  axiosInstance.post('/viaje/crear', data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+}
 
 export const deleteViaje = (id) => axiosInstance.delete(`/viaje/eliminar/${id}`) //id del viaje
 
