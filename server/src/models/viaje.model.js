@@ -8,13 +8,25 @@ export class ViajeModel {
   static async getImagenes(id_viaje) {
     try {
       const [imagenes] = await connection.query(
-        'SELECT imagen FROM imagen WHERE id_viaje = UUID_TO_BIN(?)',
+        'SELECT BIN_TO_UUID(id_imagen) AS id_imagen, BIN_TO_UUID(id_viaje) AS id_viaje, imagen FROM imagen WHERE id_viaje = UUID_TO_BIN(?)',
         [id_viaje]
       )
 
       return imagenes
     } catch (e) {
       throw new Error({ message: 'No es posible obtener las imagenes' })
+    }
+  }
+
+  static async deleteImagenes(id_imagen) {
+    try {
+      await connection.query(
+        'DELETE FROM imagen WHERE id_imagen = UUID_TO_BIN(?)',
+        [id_imagen]
+      )
+    } catch (e) {
+      console.log(e.message)
+      throw new Error({ message: 'No es posible eliminar la imagen' })
     }
   }
 
@@ -33,7 +45,7 @@ export class ViajeModel {
   static async getViaje(id) {
     try {
       const [viaje] = await connection.query(
-        'SELECT BIN_TO_UUID(id_viaje) AS id, nombre, fecha_creacion, descripcion FROM viaje WHERE id_viaje = UUID_TO_BIN(?)',
+        'SELECT BIN_TO_UUID(id_viaje) AS id, nombre, fecha_creacion, descripcion, es_publico, BIN_TO_UUID(id_usuario) AS id_usuario FROM viaje WHERE id_viaje = UUID_TO_BIN(?)',
         [id]
       )
       return viaje

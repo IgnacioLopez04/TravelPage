@@ -18,3 +18,6 @@ export const postViaje = (data) => {
 export const deleteViaje = (id) => axiosInstance.delete(`/viaje/eliminar/${id}`) //id del viaje
 
 export const updateViaje = (id) => axiosInstance.put(`/viaje/actualizar/${id}`) //id del viaje
+
+export const deleteImagen = (id_imagen) =>
+  axiosInstance.delete(`/viaje/imagen/${id_imagen}`)

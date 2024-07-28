@@ -15,7 +15,16 @@ export default function Viajes({ viajes }) {
               key={i}
               className="m-4 max-w-[20rem] min-w-[10rem] flex-grow sm:flex-none"
             >
-              <img src={viaje.imagenes[0].imagen} className="rounded-md"></img>
+              {viaje.imagenes && viaje.imagenes.length > 0 ? (
+                <>
+                  <img
+                    src={viaje.imagenes[0].imagen}
+                    className="rounded-md"
+                  ></img>
+                </>
+              ) : (
+                <></>
+              )}
               <div className="pt-4">
                 <h2 className="font-bold text-xl mb-2">{viaje.nombre}</h2>
                 <p>{viaje.descripcion}</p>

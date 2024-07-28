@@ -8,7 +8,7 @@ export default function Perfil() {
 
   useEffect(() => {
     obtenerViajesUsuario(usuario.id)
-  }, [usuario.id])
+  }, [])
 
   return (
     <>

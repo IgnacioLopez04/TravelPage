@@ -16,3 +16,4 @@ viajesRouter.post(
 )
 viajesRouter.delete('/eliminar/:id', authRequired, ViajeController.delete) //id del viaje
 viajesRouter.put('/actualizar/:id_viaje', authRequired, ViajeController.put) //id del viaje
+viajesRouter.delete('/imagen/:id', authRequired, ViajeController.deleteImagen)

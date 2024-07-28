@@ -41,6 +41,7 @@ export class ViajeController {
         nombre: viaje[0].nombre,
         descripcion: viaje[0].descripcion,
         fecha_creacion: viaje[0].fecha_creacion,
+        es_publico: viaje[0].es_publico === 1 ? true : false,
         imagenes: imagenes,
       }
 
@@ -118,13 +119,20 @@ export class ViajeController {
       return res.status(400).json({ message: 'Usuario no autorizado' })
 
     const { id } = req.params
+
     try {
-      const viaje = await ViajeModel.getViaje({ id })
+      const viaje = await ViajeModel.getViaje(id)
       if (!viaje || viaje.length === 0)
         return res.status(404).json({ message: 'Not Found' })
 
-      if (viaje.id_usuario !== req.usuario.id)
+      if (viaje[0].id_usuario !== req.usuario.id)
         return res.status(400).json({ message: 'Usuario no autorizado' })
+
+      const imagenes = await ViajeModel.getImagenes(id)
+
+      imagenes.forEach(async (imagen) => {
+        await ViajeModel.deleteImagenes(imagen.id_imagen)
+      })
 
       const result = await ViajeModel.delete({ id })
       if (!result)
@@ -166,6 +174,23 @@ export class ViajeController {
       return res.json(viajeActualizado)
     } catch (e) {
       return res.status(500).json({ message: 'Internal Server Error' })
+    }
+  }
+
+  static async deleteImagen(req, res) {
+    const { id } = req.params
+    console.log(id)
+
+    try {
+      const imagen = await ViajeModel.getImagenes(id)
+      if (!imagen) return res.status(404).json('Not Found')
+
+      console.log(imagen)
+
+      await ViajeModel.deleteImagenes(id)
+      return res.status(200)
+    } catch (e) {
+      res.status(500).json('Internal Server Error')
     }
   }
 }

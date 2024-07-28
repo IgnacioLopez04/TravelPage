@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../components/hooks'
+import { useAuth, useViaje } from '../components/hooks'
 
 export function Menu({ activo }) {
   const { autenticado, logout } = useAuth()
+  const { limpiarViaje } = useViaje()
 
   return (
     <div
@@ -30,6 +31,9 @@ export function Menu({ activo }) {
         <li className="py-1 px-5">
           <Link
             to="/crearViaje"
+            onClick={() => {
+              limpiarViaje()
+            }}
             className="text-[#FFFFFF] text-lg md:py-0 md:hover:border-b-[1px] border-[#FF8000]"
           >
             Crear Viaje

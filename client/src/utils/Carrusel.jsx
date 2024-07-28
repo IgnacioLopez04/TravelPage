@@ -17,9 +17,11 @@ export function Carrusel({ viajes, descripcion }) {
     index <= 0 ? setIndex(4) : setIndex(index - 1)
   }
 
+  console.log(viajes[0].imagenes)
+
   return (
     <>
-      {viajes ? (
+      {viajes && viajes[0].imagenes.length > 0 ? (
         <div className="w-full px-5 my-5 ">
           <div className="overflow-hidden relative rounded-md">
             <div
@@ -47,7 +49,7 @@ export function Carrusel({ viajes, descripcion }) {
                 </div>
               ))}
             </div>
-            {viajes.length > 1 ? (
+            {viajes[0].imagenes.length > 1 ? (
               <div className="absolute top-0 h-full w-full justify-between items-center flex text-[#ff8000] px-1 md:text-5xl">
                 <button className="" onClick={Izquierda}>
                   <FontAwesomeIcon
@@ -68,7 +70,7 @@ export function Carrusel({ viajes, descripcion }) {
           </div>
         </div>
       ) : (
-        <div>hola</div>
+        <></>
       )}
     </>
   )

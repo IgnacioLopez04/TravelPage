@@ -14,7 +14,11 @@ export default function Inicio() {
     <>
       <div className="md:flex">
         <Presentacion />
-        {viajes.length > 0 ? <Carrusel viajes={viajes}></Carrusel> : <></>}
+        {viajes.length > 0 ? (
+          <Carrusel viajes={viajes} descripcion={true}></Carrusel>
+        ) : (
+          <></>
+        )}
       </div>
     </>
   )
